@@ -1,13 +1,13 @@
 # DSS_py
 
-DSS_py is a Distributed System Simulator. The python class file allows one to simulate distributed systems in one's own system. One can create a number of machines, assign them tasks in the form of functions and make them communicate between each other through messages.
+DSS_py is a Distributed System Simulator. This library allows one to simulate a distributed system in a single system. One can create a number of machine instances, assign them tasks in the form of functions and make them communicate between each other through messages.
 
 ## Get Started
 
-1. Download the files and copy `class_file.py` and `config.txt` to the folder where you want to work.
+1. Download the files and copy `dss.py` and `config.txt` to the folder where you want to work.
 2. Set the maximum number of machine instances you want to work with in `config.txt`.
 3. Create a file named `functions.py` and keep the functions that you want to assign as tasks to the machines.
-4. Create another file and start coding. Do include the line `from class_file import *` in your main code.
+4. Create another file and start coding. Do include the line `from dss import *` in your main code.
 
 ## Documentation
 
@@ -20,7 +20,27 @@ DSS_py is a Distributed System Simulator. The python class file allows one to si
 `machine_1.execute_func("func_name", 1, 2)`
 
 Where `func_name` is the name of the function, followed by the arguments that the function accepts.
+
 Every function that is to be assigned as a task to the machine instance has to have their first parameter as the identity variable. One can name it whatever he/she wants. This identity variable has to be used while calling other functions such as `send()`, `recv()` and `get_machine_id()`. The function can have its regular variables (as sent through `execute_func()`) just after the identity variable.
+
+For example, lets say I want to create a machine instance **m1** and assign it a task of printing 10 numbers.
+
+**Keep the function definition in functions.py**
+
+```
+def foo(identity_variable, x):
+    for i in range(x):
+        print i
+# just a note, this identity_variable has to be used to call send(), recv() and other further defined functions
+```
+
+**Creating machine insatance**
+
+```
+>> from dss import *
+>> m1 = machine()
+>> m1.execute_func("foo", 10)
+``` 
 
 ### Sending a Message to another Machine Instance
 
