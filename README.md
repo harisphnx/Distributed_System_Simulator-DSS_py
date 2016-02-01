@@ -21,7 +21,7 @@ DSS_py is a Distributed System Simulator. This library allows one to simulate a 
 
 Where `func_name` is the name of the function, followed by the arguments that the function accepts.
 
-Every function that is to be assigned as a task to the machine instance has to have their first parameter as the identity variable. One can name it whatever he/she wants. This identity variable has to be used while calling other functions such as `send()`, `recv()` and `get_machine_id()`. The function can have its regular variables (as sent through `execute_func()`) just after the identity variable.
+Every function that is to be assigned as a task to the machine instance has to have their first parameter as the identity variable. One can name it whatever he/she wants. This identity variable has to be used while calling other functions such as `send()`, `recv()` and `get_machine_id()`. The function can have its formal variables (as sent through `execute_func()`) just after the identity variable.
 
 For example, lets say I want to create a machine instance **m1** and assign it a task of printing 10 numbers.
 
