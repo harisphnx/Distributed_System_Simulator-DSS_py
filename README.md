@@ -6,7 +6,7 @@ DSS_py is a Distributed System Simulator. The python class file allows one to si
 
 1. Download the files and copy `class_file.py` and `config.txt` to the folder where you want to work.
 2. Set the maximum number of machine instances you want to work with in `config.txt`.
-3. Create a file name `functions.py` and keep the functions that you want to assign as tasks to the machines.
+3. Create a file named `functions.py` and keep the functions that you want to assign as tasks to the machines.
 4. Create another file and start coding. Do include the line `from class_file import *` in your main code.
 
 ## Documentation
