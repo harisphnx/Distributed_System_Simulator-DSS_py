@@ -47,3 +47,7 @@ Where `"machine_1"` is the machine ID of the destination machine and `"hello"` i
 `identity_variable.get_machine_id()`
 
 Returns the machine id of the present machine. It returns in the form of `"machine_1"`.
+
+## Contact
+
+Feel free to mail me with any queries at haris.phnx@gmail.com
