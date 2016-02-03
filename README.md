@@ -34,13 +34,14 @@ def foo(identity_variable, x):
 # just a note, this identity_variable has to be used to call send(), recv() and other further defined functions
 ```
 
-**Creating machine insatance**
+**Creating machine instance and assign task through function**
 
 ```
 >> from dss import *
 >> m1 = machine()
 >> m1.execute_func("foo", 10)
 ``` 
+NOTE: The machine instance would run the function in the background. One can create another machine instance just after the above lines and assign some function.
 
 ### Sending a Message to another Machine Instance
 
