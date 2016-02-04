@@ -41,7 +41,7 @@ def foo(identity_variable, x):
 >> m1 = machine()
 >> m1.execute_func("foo", 10)
 ``` 
-NOTE: The machine instance would run the function in the background. One can create another machine instance just after the above lines and assign some function.
+*NOTE: The machine instance would run the function in the background. One can create another machine instance just after the above lines and assign some function.*
 
 ### Sending a Message to another Machine Instance
 
