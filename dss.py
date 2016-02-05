@@ -2,9 +2,16 @@ from functions import *
 import multiprocessing
 import time
 
-with open("config.txt") as f:
-    lines = f.readlines()
-max_instances =  int(lines[0].split(' ')[1])
+try:
+    with open("config.txt") as f:
+        lines = f.readlines()
+    max_instances =  int(lines[0].split(' ')[1])
+except Exception, e:
+    print "Exception while opening config.txt :", e
+    print "Please make sure that\n1) The File is present in the current folder"
+    print "2) It contains the value of MAX_NUMBER_OF_INSTANCES, space delimited"
+    print "Download the file again if problem persists"
+    exit(1)
 
 
 class machine():
@@ -28,13 +35,18 @@ class machine():
                 comm_str += str(arg) + ','
         comm_str += '))'
 
-        # create the new process
-        exec(comm_str)
+        try:
+            # create the new process
+            exec(comm_str)
 
-        # start the new process
-        comm_str = str(func_name) + '.start()'
-        exec(comm_str)
-        
+            # start the new process
+            comm_str = str(func_name) + '.start()'
+            exec(comm_str)
+        except Exception, e:
+            print "Exception in execute_func() of", self.get_machine_id(), ":", e
+            print self.get_machine_id(), "was not able to run the function ", func_name
+            print "Check your function name and parameters passed to execute_func() for", self.get_machine_id()
+            
 
     def send(self, destination_id, message):
         # send message to the machine with machine_id destination_id
