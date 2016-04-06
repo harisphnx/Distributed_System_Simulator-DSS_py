@@ -2,19 +2,21 @@ from functions import *
 import multiprocessing
 import time
 import sys
-
+# for compatibility with Python 2.7 and 3
 try:
-    with open("config.txt") as f:
-        lines = f.readlines()
-    max_instances =  int(lines[0].split(' ')[1])
-except:
-    e = sys.exc_info()
-    print("Exception while opening config.txt :", e[0], e[1])
-    print("Please make sure that\n1) The File is present in the current folder")
-    print("2) It contains the value of MAX_NUMBER_OF_INSTANCES, space delimited")
-    print("Download the file again if problem persists")
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
+
+# Checking whether by mistake the user is running dss directly
+if __name__ == "__main__":
+    print("dss.py should not be called directly")
+    print("Read the README file for further details")
     exit(1)
 
+config = ConfigParser()
+config.read("config.ini")
+max_instances = int(config.get("default", "max_number_of_instances"))
 
 class machine():
     'Class for the instance of a machine'
