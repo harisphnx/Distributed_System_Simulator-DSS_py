@@ -1,6 +1,6 @@
 
 def machine1(id_var):
-    print "machine instance started with id:", id_var.get_machine_id()
+    print("machine instance started with id:", id_var.get_machine_id())
 
     # id_var.get_machine_id() is used to get the machine id
 
@@ -9,10 +9,10 @@ def machine1(id_var):
 
     message, sender = id_var.recv()
 
-    print id_var.get_machine_id(), " got sum =", message, " from", sender
+    print(id_var.get_machine_id(), " got sum =", message, " from", sender)
 
 def machine2(id_var):
-    print "machine instance started with id:", id_var.get_machine_id()
+    print("machine instance started with id:", id_var.get_machine_id())
 
     # id_var.get_machine_id() is used to get the machine id
 
