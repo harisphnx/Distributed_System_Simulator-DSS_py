@@ -29,34 +29,30 @@ class machine():
         self.mac_id = machine.count.value
         machine.count.value += 1
 
-    def execute_func(self, func_name, *args):
-        comm_str = str(func_name) + ' = multiprocessing.Process(name = "' + str(func_name) + '", target = ' + str(func_name) + ', args = ('
-        comm_str += 'self,'
-        for arg in args:
-            if(type(arg) is str):
-                comm_str += '"' + str(arg) + '",'
-            else:
-                comm_str += str(arg) + ','
-        comm_str += '))'
+    def execute_func(self, func_name, *user_args):
+        list_of_args = [self]
+        for arg in user_args:
+            list_of_args.append(arg)
+        arguments = tuple(list_of_args)
 
         try:
-            # create the new process
-            exec(comm_str)
-
-            # start the new process
-            comm_str = str(func_name) + '.start()'
-            exec(comm_str)
+            if(func_name in globals()):
+                multiprocessing.Process(target = globals().get(func_name), args = arguments).start()
+            else:
+                raise NameError("name '" + func_name + "'is not defined")
         except:
             e = sys.exc_info()
-            print("Exception in execute_func() of", self.get_machine_id(), ":", e[0], e[1])
-            print(self.get_machine_id(), "was not able to run the function ", func_name)
-            print("Check your function name and parameters passed to execute_func() for", self.get_machine_id())
-            
+            print("Exception in execute_func() of", self.get_machine_id(), ":", e[0], e[1]) 
 
     def send(self, destination_id, message):
         # send message to the machine with machine_id destination_id
 
-        mac_id = int(destination_id[8:])
+        try:
+            mac_id = int(destination_id[8:])
+        except:
+            e = sys.exc_info()
+            print("Exception in send() of", self.get_machine_id(), ":", e[0], e[1])
+            return -1
         if(mac_id >= machine.count.value or mac_id <= 0):
             return -1
 
