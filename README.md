@@ -8,6 +8,7 @@ DSS_py is a Distributed System Simulator. This library allows one to simulate a 
 2. Set the maximum number of machine instances you want to work with in `config.ini`.
 3. Create a file named `functions.py` and keep the functions that you want to assign as tasks to the machines.
 4. Create another file and start coding. Do include the line `from dss import *` in your main code.
+
 *Go through the demos in the `Demo` folder for implemented examples.*
 
 ## Documentation
