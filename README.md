@@ -4,10 +4,10 @@ DSS_py is a Distributed System Simulator. This library allows one to simulate a 
 
 ## Get Started
 
-1. Download the files and copy `dss.py` and `config.ini` to the folder where you want to work.
+1. Download the files and copy `dss.py`, `imports.py` and `config.ini` to the folder where you want to work.
 2. Set the maximum number of machine instances you want to work with in `config.ini`.
 3. Create a file named `functions.py` and keep the functions that you want to assign as tasks to the machines.
-4. Create another file and start coding. Do include the line `from dss import *` in your main code.
+4. Create another file and start coding. Do include the line `from dss import *` in your main code (this file).
 
 *Go through the demos in the `Demo` folder for implemented examples.*
 
@@ -47,21 +47,27 @@ def foo(identity_variable, x):
 
 ### Sending a Message to another Machine Instance
 
-`identity_variable.send("machine_1", "hello")`
+`identity_variable.send("machine_1", "hello", block)`
 
 Where `"machine_1"` is the machine ID of the destination machine and `"hello"` is the message.
+`send()` can be made blocking/non-blocking by using the `block` variable. Setting `block` to `0`, would make the corresponding `send()` non-blocking, all other values would make it blocking.
 
-`send()` returns 1 on success.
+`send()` returns `1` on success.
 
-`send()` returns -1 when unsuccessful. This error will occur when you pass machine id that is not present.
+`send()` returns `0` when `block` is set to `0` (`send()` is marked non-blocking) and the requested operation would block.
+
+`send()` returns `-1` when unsuccessful. This error will occur when you pass machine id that is not present.
 
 ### Receiving a Message from other Machine Instance
 
-`identity_variable.recv()`
+`identity_variable.recv(block)`
 
-`recv()` is blocking, and will return only when some machine has sent a message that is buffered or some machine sends at that time.
+`recv()` will get any message that has been sent to the corresponding machine.
+`recv()` can be made blocking/non-blocking by using the `block` variable. Setting `block` to `0`, would make the corresponding `recv()` non-blocking, all other values would make it blocking.
 
 `recv()` returns `message, sender_machine_id` on success.
+
+`recv()` returns `0, 0` when `block` is set to `0` (`recv()` is marked non-blocking) and the requested operation would block.
 
 `recv()` returns `-1, -1` when unsuccessful.
 

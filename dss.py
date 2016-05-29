@@ -1,12 +1,5 @@
-from functions import *
-import multiprocessing
-import time
-import sys
-# for compatibility with Python 2.7 and 3
-try:
-    from configparser import ConfigParser
-except ImportError:
-    from ConfigParser import ConfigParser
+from imports import *
+
 
 # Checking whether by mistake the user is running dss directly
 if __name__ == "__main__":
@@ -44,7 +37,7 @@ class machine():
             e = sys.exc_info()
             print("Exception in execute_func() of", self.get_machine_id(), ":", e[0], e[1]) 
 
-    def send(self, destination_id, message):
+    def send(self, destination_id, message, is_blocking):
         # send message to the machine with machine_id destination_id
 
         try:
@@ -60,15 +53,27 @@ class machine():
         # However, the message received is processed and then returned back to the user
         message += '|' + str(self.get_id())
 
-        machine.q[mac_id].put(message)
+        if(is_blocking == 0):
+            try:
+                machine.q[mac_id].put(message, block = False)
+            except Full:
+                return 0
+        else:
+            machine.q[mac_id].put(message, block = True)
         return 1
 
-    def recv(self):
+    def recv(self, is_blocking):
         mac_id = self.get_id()
         if(mac_id >= machine.count.value or mac_id <= 0):
             return -1, -1
 
-        message =  machine.q[mac_id].get().split('|')
+        if(is_blocking == 0):
+            try:
+                message =  machine.q[mac_id].get(block = False).split('|')
+            except Empty:
+                return 0, 0
+        else:
+            message =  machine.q[mac_id].get(block = True).split('|')
 
         # message received is returned with the format "hello" message from "machine_2"
         return message[0], 'machine_' + message[1]

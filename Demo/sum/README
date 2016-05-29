@@ -1,5 +1,7 @@
 This demo shows a very basic example how the library can be used.
 
-The demo creates 2 machines, i.e. machine_1 and machine_2. machine_1 sends 10 numbers to machine_2, which adds them and returns the total.
+The demo creates 2 machines, i.e. machine_1 and machine_2. machine_1 sends 10
+numbers to machine_2, which adds them and returns the total.
 
-This demo shows how to use the library and how to send and receive messages between machine instances.
+This demo shows how to use the library and how to send and receive messages
+between machine instances.
