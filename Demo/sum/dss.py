@@ -82,4 +82,56 @@ class machine():
         return self.mac_id
 
     def get_machine_id(self):
-        return "machine_" + str(self.get_id()) 
+        return "machine_" + str(self.get_id())                     time.sleep(0.1)
+
+        return 1
+
+    def recv(self, is_blocking=False):
+        '''
+        Receive a message from another machine instance.
+        If is_blocking is True, the recv method will block until a message is received.
+        Otherwise, the recv method will return immediately, even if no message is received.
+        '''
+        mac_id = self.get_id()
+        if mac_id >= Machine.count.value or mac_id <= 0:
+            return -1, -1
+
+        if is_blocking:
+            try:
+                message = Machine.q[mac_id].get(block=True, timeout=30)
+            except Exception as e:
+                logging.error("Exception in recv() of machine %s: %s", self.get_machine_id(), e)
+                return 0, 0
+        else:
+            while True:
+                try:
+                    message = Machine.q[mac_id].get(block=False)
+                    break
+                except Empty:
+                    time.sleep(0.1)
+
+        # message received is returned with the format "hello" message from "machine_2"
+        return message.split('|')[0], 'machine_' + message.split('|')[1]
+
+    def receiver(self):
+        '''
+        Thread that listens for incoming messages and handles them.
+        '''
+        while True:
+            message, sender_id = self.recv(is_blocking=True)
+            if message == 'shutdown':
+                break
+            logging.info("Received message '%s' from %s", message, sender_id)
+
+    def get_id(self):
+        return self.mac_id
+
+    def get_machine_id(self):
+        return "machine_" + str(self.get_id())
+
+# Checking whether by mistake the user is running dss directly
+if __name__ == "__main__":
+    print("dss.py should not be called directly")
+    print("Read the README file for further details")
+    exit(1)
+
